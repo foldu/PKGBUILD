@@ -1,0 +1,20 @@
+pkgname=cargo-docset
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Generate zeal docsets from crates'
+arch=('x86_64')
+url="https://github.com/Robzz/cargo-docset"
+license=('MIT')
+makedepends=('rust')
+source=("https://github.com/Robzz/$pkgname/archive/v$pkgver.tar.gz")
+sha256sums=('cf950bb1e5e7ef34a4ea5b1cb81ec0d50ed39540d48ee4a6f67c58b0f731558e')
+
+build() {
+    cd "$pkgname-$pkgver"
+    cargo build --release --locked
+}
+
+package() {
+    cd "$pkgname-$pkgver"
+    install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
+}

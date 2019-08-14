@@ -1,0 +1,24 @@
+pkgname=tea
+pkgver=0.0.1
+pkgrel=1
+pkgdesc='Gitea hub thing'
+arch=('x86_64')
+url="https://gitea.com/gitea/tea"
+license=('MIT')
+makedepends=('go-pie')
+source=("git+https://gitea.com/gitea/tea.git")
+sha256sums=('SKIP')
+
+build() {
+    cd "$pkgname"
+    go build \
+        -gcflags "all=-trimpath=$PWD" \
+        -asmflags "all=-trimpath=$PWD" \
+        -ldflags "-extldflags $LDFLAGS" \
+        -o $pkgname .
+}
+
+package() {
+    cd $pkgname
+    install -Dm755 $pkgname "$pkgdir"/usr/bin/$pkgname
+}

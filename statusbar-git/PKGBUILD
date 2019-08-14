@@ -1,0 +1,20 @@
+pkgname=statusbar
+pkgver=0.0.1
+pkgrel=1
+pkgdesc='A textual statusbar'
+arch=('x86_64')
+url="https://github.com/foldu/statusbar"
+license=('MIT')
+makedepends=('rust' 'dbus')
+source=("git+https://github.com/foldu/statusbar")
+sha256sums=('SKIP')
+
+build() {
+    cd "$pkgname"
+    cargo build --release --locked
+}
+
+package() {
+    cd "$pkgname"
+    install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
+}
