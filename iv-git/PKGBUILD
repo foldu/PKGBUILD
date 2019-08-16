@@ -1,0 +1,22 @@
+pkgname=iv-git
+_pkgname=iv
+pkgver=0.0.1
+pkgrel=1
+pkgdesc='An image viewer'
+arch=('x86_64')
+url="https://github.com/foldu/iv"
+license=('MIT')
+makedepends=('rust' 'dbus' 'gtk3')
+source=("git+https://github.com/foldu/iv")
+sha256sums=('SKIP')
+
+build() {
+    cd "$_pkgname"
+    cargo build --release --locked
+}
+
+package() {
+    cd "$_pkgname"
+    install -Dm755 target/release/$_pkgname "$pkgdir/usr/bin/$_pkgname"
+    install -Dm644 iv.desktop "$pkgdir/usr/share/applications/iv.desktop"
+}
